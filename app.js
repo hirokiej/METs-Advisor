@@ -2,38 +2,54 @@ import enquirer from "enquirer";
 
 const { prompt } = enquirer;
 
-async function main() {
-  const questions = await prompt([
+async function averageSteps() {
+  const response = await prompt([
     {
       type: "input",
       name: "steps",
       message: "1日平均の歩数を教えてください",
       validate: (steps) => {
-        const number = steps;
+        const number = Number(steps);
         if (isNaN(number)) {
           return "文字を削除し数字で答えてください";
         } else if (0 > number) {
           return "マイナスを削除し正の数で答えてください";
+        } else if (number === "") {
+          return "数字を入力してください";
         } else {
           return true;
         }
       },
     },
+  ]);
+  return response.steps;
+}
+
+async function askActiveDay() {
+  const response = await prompt([
     {
       type: "input",
       name: "activeDay",
       message: "1週間に何日間運動をしていますか？",
-      validate: (activieDay) => {
-        const number = activieDay;
+      validate: (activeDay) => {
+        const number = Number(activeDay);
         if (isNaN(number)) {
           return "文字を削除し数字で答えてください";
         } else if (number < 0 || number > 7) {
           return "正しい数字で答えてください";
+        } else if (number === "") {
+          return "数字を入力してください";
         } else {
           return true;
         }
       },
     },
+  ]);
+  return Number(response.activeDay);
+}
+
+async function askIntensityOfActivity() {
+  const response = await prompt([
     {
       type: "select",
       name: "intensityOfActivity",
@@ -41,13 +57,14 @@ async function main() {
       choices: ["軽度な運動", "中程度な運動", "強度な運動"],
     },
   ]);
+
   let intensity = [];
-  if (questions.intensityOfActivity === "軽度な運動") {
+  if (response.intensityOfActivity === "軽度な運動") {
     intensity = [
       { name: "徒歩やピラティス程度", value: 3 },
       { name: "やや早めの徒歩程度", value: 4 },
     ];
-  } else if (questions.intensityOfActivity === "中程度な運動") {
+  } else if (response.intensityOfActivity === "中程度な運動") {
     intensity = [
       { name: "かなり早い徒歩程度", value: 5 },
       { name: "ゆっくりなジョギング程度", value: 6 },
@@ -61,8 +78,11 @@ async function main() {
       { name: "かなり激しい運動", value: 15 },
     ];
   }
+  return intensity;
+}
 
-  const exampleIntensity = await prompt([
+async function exampleIntensity(intensity) {
+  const response = await prompt([
     {
       type: "select",
       name: "activityIntensity",
@@ -72,24 +92,58 @@ async function main() {
         return this.focused.value;
       },
     },
+  ]);
+  return Number(response.activityIntensity);
+}
+
+async function askActivityAmount() {
+  const response = await prompt([
     {
       type: "input",
       name: "activityAmount",
       message: "その運動は1日合計で何分ほどですか？",
+      validate: (activityAmount) => {
+        const number = Number(activityAmount);
+        if (isNaN(number)) {
+          return "文字を削除し数字で答えてください";
+        } else if (0 > number) {
+          return "マイナスを削除し正の数で答えてください";
+        } else if (number === "") {
+          return "数字を入力してください";
+        } else {
+          return true;
+        }
+      },
     },
   ]);
+  return Number(response.activityAmount);
+}
 
-  const weeklySteps = questions.steps * 7;
+function stepMets(steps) {
+  const weeklySteps = steps * 7;
   const stepsMets = Math.trunc((weeklySteps / 8000) * 3);
-  const activityMets = questions.activeDay * exampleIntensity.activityIntensity;
-  const weeklyActivityMets =
-    (exampleIntensity.activityAmount / 60) * activityMets;
-  const totalMets = Math.trunc(stepsMets + weeklyActivityMets);
-  const metsShortage = 23 - totalMets;
-  const suggestedWalking = Math.trunc((metsShortage / 0.4) * 6);
-  const suggestedRunning = Math.trunc((metsShortage / 0.9) * 6);
+  return stepsMets;
+}
 
-  yourResult(totalMets, metsShortage, suggestedWalking, suggestedRunning);
+function weeklyActivityMets(activeDay, activityIntensity, activityAmount) {
+  const activityMets = activeDay * activityIntensity;
+  const weeklyActivityMets = (activityAmount / 60) * activityMets;
+  return weeklyActivityMets;
+}
+
+async function askYourActivity(activeDay) {
+  const intensity = await askIntensityOfActivity();
+  const activityIntensity = await exampleIntensity(intensity);
+  const activityAmount = await askActivityAmount();
+  return weeklyActivityMets(activeDay, activityIntensity, activityAmount);
+}
+
+function calcTotalMets(activeDay, stepMetsValue, weeklyActivityMetsValue) {
+  if (activeDay === 0) {
+    return Math.trunc(stepMetsValue);
+  } else {
+    return Math.trunc(stepMetsValue + weeklyActivityMetsValue);
+  }
 }
 
 function yourResult(
@@ -112,6 +166,24 @@ function yourResult(
       `軽いランニング: ${suggestedRunning}分以上→1日あたり${Math.trunc(suggestedRunning / 7)}分`
     );
   }
+}
+
+async function main() {
+  const steps = await averageSteps();
+  const stepMetsValue = stepMets(steps);
+  const activeDay = await askActiveDay();
+  const weeklyActivityMetsValue =
+    activeDay === 0 ? 0 : await askYourActivity(activeDay);
+  const totalMets = calcTotalMets(
+    activeDay,
+    stepMetsValue,
+    weeklyActivityMetsValue
+  );
+
+  const metsShortage = 23 - totalMets;
+  const suggestedWalking = Math.trunc((metsShortage / 0.4) * 6);
+  const suggestedRunning = Math.trunc((metsShortage / 0.9) * 6);
+  yourResult(totalMets, metsShortage, suggestedWalking, suggestedRunning);
 }
 
 main();
