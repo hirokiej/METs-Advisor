@@ -1,6 +1,12 @@
-const WEEKLY_DEAL_METS = 23;
-const SUFFICIENT_METS = 21;
-const INSUFFICIENT_METS = 20;
+import {
+  WEEKLY_IDEAL_METS,
+  SUFFICIENT_METS,
+  INSUFFICIENT_METS,
+  WALKING_METS,
+  RUNNING_METS,
+  HOURLY_MIN,
+  ONE_WEEK,
+} from "./constants.js";
 
 export default class Result {
   yourResult(totalMets) {

@@ -1,7 +1,9 @@
-const ONE_WEEK = 7;
-const DAILY_IDEAL_STEPS = 8000;
-const STEP_METS = 3;
-const HOURLY_MIN = 60;
+import {
+  ONE_WEEK,
+  DAILY_IDEAL_STEPS,
+  STEP_METS,
+  HOURLY_MIN,
+} from "./constants.js";
 
 export default class MetsCalculation {
   constructor() {}
