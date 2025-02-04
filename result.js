@@ -10,6 +10,10 @@ import {
 
 import { readFile } from "fs/promises";
 export default class Result {
+  constructor(totalMets) {
+    this.totalMets = totalMets;
+    this.metsShortage = WEEKLY_IDEAL_METS - this.totalMets;
+  }
   async #parseJsonFile() {
     const messageFile = await readFile("resultMessages.json", "utf-8");
     const message = messageFile
