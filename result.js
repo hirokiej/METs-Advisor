@@ -14,6 +14,20 @@ export default class Result {
     this.totalMets = totalMets;
     this.metsShortage = WEEKLY_IDEAL_METS - this.totalMets;
   }
+  #isIdealMets() {
+    return this.totalMets >= WEEKLY_IDEAL_METS;
+  }
+
+  #isSufficientMets() {
+    return (
+      this.totalMets === SUFFICIENT_METS ||
+      this.totalMets === SUFFICIENT_METS + 1
+    );
+  }
+
+  #isInsufficientMets() {
+    return this.totalMets <= INSUFFICIENT_METS;
+  }
   async #parseJsonFile() {
     const messageFile = await readFile("resultMessages.json", "utf-8");
     const message = messageFile
