@@ -10,7 +10,9 @@ export default class ActivityPrompt {
     const steps = await this.#askAverageSteps();
     const activeDay = await this.#askActiveDay();
     const weeklyActivityMetsValue =
-      activeDay === "0" ? 0 : await this.#askActivityDetails(activeDay);
+      activeDay === "0"
+        ? 0
+        : await this.#askAndSelectActivityDetails(activeDay);
     return { steps, activeDay, weeklyActivityMetsValue };
   }
 
@@ -49,11 +51,11 @@ export default class ActivityPrompt {
     return response.activeDay;
   }
 
-  async #askActivityDetails(activeDay) {
+  async #askAndSelectActivityDetails(activeDay) {
     const intensitySelector = new IntensitySelector();
-    const intensity = await intensitySelector.askIntensityOfActivity();
+    const intensity = await intensitySelector.selectIntensityOfActivity();
     const activityIntensity =
-      await intensitySelector.askSpecificIntensity(intensity);
+      await intensitySelector.selectSpecificActivity(intensity);
     const activityAmount = await this.#askActivityMinutes();
     return metsCalculation.weeklyActivityMets(
       activeDay,

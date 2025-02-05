@@ -3,7 +3,7 @@ import enquirer from "enquirer";
 const { prompt } = enquirer;
 
 export default class IntensitySelector {
-  async askIntensityOfActivity() {
+  async selectIntensityOfActivity() {
     const response = await prompt([
       {
         type: "select",
@@ -37,7 +37,7 @@ export default class IntensitySelector {
     return intensityLevels;
   }
 
-  async askSpecificIntensity(intensityLevels) {
+  async selectSpecificActivity(intensityLevels) {
     const response = await prompt([
       {
         type: "select",
