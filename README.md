@@ -6,7 +6,7 @@
 # 使い方
 
 1.npmをインストールしてください
-`npm install -g METs-Advisor`
+`npm install -g mets-advisor`
 
 2.コマンドを実行してください
 `mets-advisor`
