@@ -17,7 +17,7 @@ export default class MetsCalculation {
     return activeDay * activityMets;
   }
 
-  calcTotalMets(stepMetsValue, weeklyActivityMetsValue) {
-    return Math.trunc(stepMetsValue + weeklyActivityMetsValue);
+  calcTotalMets(stepMetsValue, weeklyMetsValueValue) {
+    return Math.trunc(stepMetsValue + weeklyMetsValueValueValue);
   }
 }

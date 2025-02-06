@@ -9,9 +9,9 @@ export default class ActivityPrompt {
   async gatherActivityInput() {
     const steps = await this.#inputDailyAverageSteps();
     const activeDay = await this.#inputActiveDays();
-    const weeklyActivityMetsValue =
+    const weeklyMetsValue =
       activeDay === "0" ? 0 : await this.#gatherActivityDetails(activeDay);
-    return { steps, activeDay, weeklyActivityMetsValue };
+    return { steps, activeDay, weeklyMetsValue };
   }
   async #inputDailyAverageSteps() {
     const response = await prompt([
