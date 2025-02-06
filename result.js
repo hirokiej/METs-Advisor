@@ -68,10 +68,10 @@ export default class Result {
     const suggestRunningMinutes = this.#calcRunningMinutes();
 
     console.log(
-      `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`
+      `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`,
     );
     console.log(
-      `🏃軽いランニング(9メッツ): ${suggestRunningMinutes}分以上(1日あたり${Math.trunc(suggestRunningMinutes / ONE_WEEK)}分)`
+      `🏃軽いランニング(9メッツ): ${suggestRunningMinutes}分以上(1日あたり${Math.trunc(suggestRunningMinutes / ONE_WEEK)}分)`,
     );
   }
 }

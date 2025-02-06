@@ -58,7 +58,7 @@ export default class ActivityPrompt {
     return metsCalculation.calcWeeklyActivityMets(
       activeDay,
       activityIntensity,
-      activityAmount
+      activityAmount,
     );
   }
 

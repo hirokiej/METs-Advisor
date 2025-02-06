@@ -12,7 +12,7 @@ async function app() {
   const stepMetsValue = metsCalculation.calcStepMets(steps);
   const totalMets = metsCalculation.calcTotalMets(
     stepMetsValue,
-    weeklyMetsValue
+    weeklyMetsValue,
   );
   const result = new Result(totalMets);
   result.displayResult(totalMets);
