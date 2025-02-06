@@ -1,7 +1,7 @@
 import enquirer from "enquirer";
 import MetsCalculation from "./metsCalculation.js";
 import IntensitySelector from "./intensitySelector.js";
-
+import { ONE_WEEK } from "./constants.js";
 const { prompt } = enquirer;
 const metsCalculation = new MetsCalculation();
 
@@ -13,18 +13,6 @@ export default class ActivityPrompt {
       activeDay === "0" ? 0 : await this.#gatherActivityDetails(activeDay);
     return { steps, activeDay, weeklyActivityMetsValue };
   }
-
-  #validateProperNumber(input) {
-    const number = input;
-    if (isNaN(number)) {
-      return "文字を削除し数字で答えてください";
-    } else if (number === "") {
-      return "数字を入力してください";
-    } else {
-      return true;
-    }
-  }
-
   async #inputDailyAverageSteps() {
     const response = await prompt([
       {
@@ -43,7 +31,7 @@ export default class ActivityPrompt {
         type: "input",
         name: "activeDay",
         message: "1週間に何日間運動をしていますか？",
-        validate: this.#validateProperNumber,
+        validate: this.#validateActiveDay,
       },
     ]);
     return response.activeDay;
@@ -72,5 +60,29 @@ export default class ActivityPrompt {
       activityIntensity,
       activityAmount
     );
+  }
+
+  #validateProperNumber(input) {
+    const number = input;
+    if (isNaN(number)) {
+      return "文字を削除し数字で答えてください";
+    } else if (number === "") {
+      return "数字を入力してください";
+    } else {
+      return true;
+    }
+  }
+
+  #validateActiveDay(input) {
+    const number = input;
+    if (isNaN(number)) {
+      return "文字を削除し数字で答えてください";
+    } else if (number === "") {
+      return "数字を入力してください";
+    } else if (number > ONE_WEEK) {
+      return "0−7の数字で答えてください";
+    } else {
+      return true;
+    }
   }
 }
