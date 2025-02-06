@@ -1,8 +1,11 @@
 {
   "name": "mets-advisor",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tool for calculating whether your physical activity is enough or not",
   "main": "app.js",
+  "bin": {
+    "mets-advisor": "./app.js"
+  },
   "scripts": {
     "fix": "prettier --write . && eslint --fix",
     "lint": "prettier --check . && eslint ."
