@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import ActivityPrompt from "./activityPrompt.js";
 import MetsCalculation from "./metsCalculation.js";
 import Result from "./result.js";
