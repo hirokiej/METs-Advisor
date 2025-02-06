@@ -2,7 +2,7 @@ import {
   ONE_WEEK,
   DAILY_IDEAL_STEPS,
   STEP_METS,
-  HOURLY_MIN,
+  HOURLY_MINUTES,
 } from "./constants.js";
 
 export default class MetsCalculation {
@@ -13,7 +13,7 @@ export default class MetsCalculation {
   }
 
   calcWeeklyActivityMets(activeDay, activityIntensity, activityAmount) {
-    const activityMets = (activityAmount / HOURLY_MIN) * activityIntensity;
+    const activityMets = (activityAmount / HOURLY_MINUTES) * activityIntensity;
     return activeDay * activityMets;
   }
 

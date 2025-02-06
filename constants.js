@@ -1,7 +1,7 @@
 export const DAILY_IDEAL_STEPS = 8000;
 export const STEP_METS = 3;
 
-export const HOURLY_MIN = 60;
+export const HOURLY_MINUTES = 60;
 export const ONE_WEEK = 7;
 
 export const WEEKLY_IDEAL_METS = 23;

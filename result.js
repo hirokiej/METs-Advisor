@@ -4,7 +4,7 @@ import {
   INSUFFICIENT_METS,
   WALKING_METS,
   RUNNING_METS,
-  HOURLY_MIN,
+  HOURLY_MINUTES,
   ONE_WEEK,
 } from "./constants.js";
 
@@ -56,27 +56,27 @@ export default class Result {
   }
 
   #calcSuggestExercise() {
-    const suggestWalkingMin = this.#calcWalkingMin();
-    const suggestRunningMin = this.#calcRunningMin();
-    return { suggestWalkingMin, suggestRunningMin };
+    const suggestWalkingMinutes = this.#calcWalkingMinutes();
+    const suggestRunningMinutes = this.#calcRunningMinutes();
+    return { suggestWalkingMinutes, suggestRunningMinutes };
   }
 
-  #calcWalkingMin() {
-    return Math.trunc((this.metsShortage / WALKING_METS) * HOURLY_MIN);
+  #calcWalkingMinutes() {
+    return Math.trunc((this.metsShortage / WALKING_METS) * HOURLY_MINUTES);
   }
 
-  #calcRunningMin() {
-    return Math.trunc((this.metsShortage / RUNNING_METS) * HOURLY_MIN);
+  #calcRunningMinutes() {
+    return Math.trunc((this.metsShortage / RUNNING_METS) * HOURLY_MINUTES);
   }
 
   #suggestRequiredExercise() {
-    const { suggestWalkingMin, suggestRunningMin } =
+    const { suggestWalkingMinutes, suggestRunningMinutes } =
       this.#calcSuggestExercise();
     console.log(
-      `🚶ウォーキング(4メッツ): ${suggestWalkingMin}分以上(1日あたり${Math.trunc(suggestWalkingMin / ONE_WEEK)}分)`
+      `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`
     );
     console.log(
-      `🏃軽いランニング(9メッツ): ${suggestRunningMin}分以上(1日あたり${Math.trunc(suggestRunningMin / ONE_WEEK)}分)`
+      `🏃軽いランニング(9メッツ): ${suggestRunningMinutes}分以上(1日あたり${Math.trunc(suggestRunningMinutes / ONE_WEEK)}分)`
     );
   }
 }
