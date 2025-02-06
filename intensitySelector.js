@@ -15,7 +15,7 @@ export default class IntensitySelector {
 
     let intensityLevels = [];
     if (response.selectActivityIntensity === "軽度な運動") {
-      // valueは運動強度のMETsを表す数値
+      // valueはnameの運動に対する運動強度の単位METsを示す数値
       intensityLevels = [
         { name: "徒歩やピラティス程度", value: 3 },
         { name: "やや早めの徒歩程度", value: 4 },
