@@ -55,12 +55,6 @@ export default class Result {
     messages.forEach((message) => console.log(message));
   }
 
-  #calcSuggestExercise() {
-    const suggestWalkingMinutes = this.#calcWalkingMinutes();
-    const suggestRunningMinutes = this.#calcRunningMinutes();
-    return { suggestWalkingMinutes, suggestRunningMinutes };
-  }
-
   #calcWalkingMinutes() {
     return Math.trunc((this.metsShortage / WALKING_METS) * HOURLY_MINUTES);
   }
@@ -70,8 +64,9 @@ export default class Result {
   }
 
   #suggestRequiredExercise() {
-    const { suggestWalkingMinutes, suggestRunningMinutes } =
-      this.#calcSuggestExercise();
+    const suggestWalkingMinutes = this.#calcWalkingMinutes();
+    const suggestRunningMinutes = this.#calcRunningMinutes();
+
     console.log(
       `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`
     );
