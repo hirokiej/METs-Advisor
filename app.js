@@ -16,7 +16,7 @@ async function app() {
     weeklyActivityMetsValue
   );
   const result = new Result(totalMets);
-  result.yourResult(totalMets);
+  result.displayResult(totalMets);
 }
 
 app();

@@ -14,8 +14,8 @@ export default class Result {
     this.totalMets = totalMets;
     this.metsShortage = WEEKLY_IDEAL_METS - this.totalMets;
   }
-  async yourResult() {
-    const data = await this.#parseJsonFile();
+  async displayResult() {
+    const data = await this.#parseResultMessages();
 
     if (this.#isIdealMets()) {
       this.#displayMessages(data.ideal);
@@ -43,7 +43,7 @@ export default class Result {
     return this.totalMets <= INSUFFICIENT_METS;
   }
 
-  async #parseJsonFile() {
+  async #parseResultMessages() {
     const messageFile = await readFile("resultMessages.json", "utf-8");
     const message = messageFile
       .replaceAll("{totalMets}", this.totalMets)
