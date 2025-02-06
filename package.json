@@ -1,6 +1,6 @@
 {
   "name": "mets-advisor",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A tool for calculating whether your physical activity is enough or not",
   "main": "app.js",
   "bin": {
