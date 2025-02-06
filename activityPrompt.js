@@ -6,13 +6,11 @@ const { prompt } = enquirer;
 const metsCalculation = new MetsCalculation();
 
 export default class ActivityPrompt {
-  async allQuestions() {
-    const steps = await this.#askAverageSteps();
-    const activeDay = await this.#askActiveDay();
+  async gatherActivityInput() {
+    const steps = await this.#inputDailyAverageSteps();
+    const activeDay = await this.#inputActiveDays();
     const weeklyActivityMetsValue =
-      activeDay === "0"
-        ? 0
-        : await this.#askAndSelectActivityDetails(activeDay);
+      activeDay === "0" ? 0 : await this.#gatherActivityDetails(activeDay);
     return { steps, activeDay, weeklyActivityMetsValue };
   }
 
@@ -27,7 +25,7 @@ export default class ActivityPrompt {
     }
   }
 
-  async #askAverageSteps() {
+  async #inputDailyAverageSteps() {
     const response = await prompt([
       {
         type: "input",
@@ -39,7 +37,7 @@ export default class ActivityPrompt {
     return response.steps;
   }
 
-  async #askActiveDay() {
+  async #inputActiveDays() {
     const response = await prompt([
       {
         type: "input",
@@ -51,20 +49,7 @@ export default class ActivityPrompt {
     return response.activeDay;
   }
 
-  async #askAndSelectActivityDetails(activeDay) {
-    const intensitySelector = new IntensitySelector();
-    const intensity = await intensitySelector.selectIntensityOfActivity();
-    const activityIntensity =
-      await intensitySelector.selectSpecificActivity(intensity);
-    const activityAmount = await this.#askActivityMinutes();
-    return metsCalculation.weeklyActivityMets(
-      activeDay,
-      activityIntensity,
-      activityAmount
-    );
-  }
-
-  async #askActivityMinutes() {
+  async #inputDailyActivityMinutes() {
     const response = await prompt([
       {
         type: "input",
@@ -74,5 +59,18 @@ export default class ActivityPrompt {
       },
     ]);
     return response.activityAmount;
+  }
+
+  async #gatherActivityDetails(activeDay) {
+    const intensitySelector = new IntensitySelector();
+    const intensity = await intensitySelector.selectIntensityOfActivity();
+    const activityIntensity =
+      await intensitySelector.selectSpecificActivity(intensity);
+    const activityAmount = await this.#inputDailyActivityMinutes();
+    return metsCalculation.weeklyActivityMets(
+      activeDay,
+      activityIntensity,
+      activityAmount
+    );
   }
 }

@@ -7,7 +7,7 @@ async function app() {
   const metsCalculation = new MetsCalculation();
 
   const { steps, weeklyActivityMetsValue } =
-    await activityPrompt.allQuestions();
+    await activityPrompt.gatherActivityInput();
   const stepMetsValue = metsCalculation.stepMets(steps);
   const totalMets = metsCalculation.calcTotalMets(
     stepMetsValue,
