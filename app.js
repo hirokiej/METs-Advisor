@@ -8,12 +8,11 @@ async function app() {
   const activityPrompt = new ActivityPrompt();
   const metsCalculation = new MetsCalculation();
 
-  const { steps, weeklyActivityMetsValue } =
-    await activityPrompt.gatherActivityInput();
+  const { steps, weeklyMetsValue } = await activityPrompt.gatherActivityInput();
   const stepMetsValue = metsCalculation.calcStepMets(steps);
   const totalMets = metsCalculation.calcTotalMets(
     stepMetsValue,
-    weeklyActivityMetsValue
+    weeklyMetsValue
   );
   const result = new Result(totalMets);
   result.displayResult(totalMets);
