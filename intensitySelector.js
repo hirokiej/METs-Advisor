@@ -3,24 +3,24 @@ import enquirer from "enquirer";
 const { prompt } = enquirer;
 
 export default class IntensitySelector {
-  async selectIntensityOfActivity() {
+  async selectActivityIntensity() {
     const response = await prompt([
       {
         type: "select",
-        name: "intensityOfActivity",
+        name: "selectActivityIntensity",
         message: "あなたが行なっている負荷の運動目安を選んでください",
         choices: ["軽度な運動", "中程度な運動", "強度な運動"],
       },
     ]);
 
     let intensityLevels = [];
-    if (response.intensityOfActivity === "軽度な運動") {
+    if (response.selectActivityIntensity === "軽度な運動") {
       // valueは運動強度のMETsを表す数値
       intensityLevels = [
         { name: "徒歩やピラティス程度", value: 3 },
         { name: "やや早めの徒歩程度", value: 4 },
       ];
-    } else if (response.intensityOfActivity === "中程度な運動") {
+    } else if (response.selectActivityIntensity === "中程度な運動") {
       intensityLevels = [
         { name: "かなり早い徒歩程度", value: 5 },
         { name: "ゆっくりなジョギング程度", value: 6 },
@@ -37,7 +37,7 @@ export default class IntensitySelector {
     return intensityLevels;
   }
 
-  async selectSpecificActivity(intensityLevels) {
+  async selectActivityLevels(intensityLevels) {
     const response = await prompt([
       {
         type: "select",

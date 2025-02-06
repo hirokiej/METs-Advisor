@@ -63,9 +63,9 @@ export default class ActivityPrompt {
 
   async #gatherActivityDetails(activeDay) {
     const intensitySelector = new IntensitySelector();
-    const intensity = await intensitySelector.selectIntensityOfActivity();
+    const intensity = await intensitySelector.selectActivityIntensity();
     const activityIntensity =
-      await intensitySelector.selectSpecificActivity(intensity);
+      await intensitySelector.selectActivityLevels(intensity);
     const activityAmount = await this.#inputDailyActivityMinutes();
     return metsCalculation.calcWeeklyActivityMets(
       activeDay,
