@@ -19,7 +19,7 @@ export default class Result {
     this.totalMets = totalMets;
     this.metsShortage = WEEKLY_IDEAL_METS - this.totalMets;
   }
-  async displayResult() {
+  async display() {
     const data = await this.#parseResultMessages();
 
     if (this.#isIdealMets()) {
