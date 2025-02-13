@@ -9,6 +9,11 @@ import {
 } from "./constants.js";
 
 import { readFile } from "fs/promises";
+import { fileURLToPath } from "url";
+import path from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 export default class Result {
   constructor(totalMets) {
     this.totalMets = totalMets;
@@ -44,7 +49,10 @@ export default class Result {
   }
 
   async #parseResultMessages() {
-    const messageFile = await readFile("resultMessages.json", "utf-8");
+    const messageFile = await readFile(
+      path.join(__dirname, "resultMessages.json"),
+      "utf-8"
+    );
     const message = messageFile
       .replaceAll("{totalMets}", this.totalMets)
       .replaceAll("{metsShortage}", this.metsShortage);
@@ -68,10 +76,10 @@ export default class Result {
     const suggestRunningMinutes = this.#calcRunningMinutes();
 
     console.log(
-      `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`,
+      `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`
     );
     console.log(
-      `🏃軽いランニング(9メッツ): ${suggestRunningMinutes}分以上(1日あたり${Math.trunc(suggestRunningMinutes / ONE_WEEK)}分)`,
+      `🏃軽いランニング(9メッツ): ${suggestRunningMinutes}分以上(1日あたり${Math.trunc(suggestRunningMinutes / ONE_WEEK)}分)`
     );
   }
 }
