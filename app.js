@@ -10,7 +10,7 @@ async function app() {
   const { steps, activeDay, activityIntensity, activityAmount } =
     await activityPrompt.gatherActivityInput();
   const mets = new Mets(steps, activeDay, activityIntensity, activityAmount);
-  const result = new Result(mets.totalMets);
+  const result = new Result(mets.getTotalMets());
   result.display();
 }
 
