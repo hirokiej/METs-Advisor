@@ -5,7 +5,16 @@ import {
   HOURLY_MINUTES,
 } from "./constants.js";
 
-export default class MetsCalculation {
+export default class Mets {
+  constructor(steps, activeDay, activityIntensity, activityAmount) {
+    this.stepMets = this.calcStepMets(steps);
+    this.weeklyMets = this.calcWeeklyActivityMets(
+      activeDay,
+      activityIntensity,
+      activityAmount
+    );
+    this.totalMets = Math.trunc(this.stepMets + this.weeklyMets);
+  }
   calcStepMets(steps) {
     const weeklySteps = steps * ONE_WEEK;
     const stepsMets = Math.trunc((weeklySteps / DAILY_IDEAL_STEPS) * STEP_METS);
@@ -17,7 +26,7 @@ export default class MetsCalculation {
     return activeDay * activityMets;
   }
 
-  calcTotalMets(stepMetsValue, weeklyMetsValue) {
-    return Math.trunc(stepMetsValue + weeklyMetsValue);
+  calcTotalMets() {
+    return Math.trunc(this.stepMets + this.weeklyMets);
   }
 }

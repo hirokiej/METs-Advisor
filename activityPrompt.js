@@ -1,17 +1,15 @@
 import enquirer from "enquirer";
-import MetsCalculation from "./metsCalculation.js";
 import IntensitySelector from "./intensitySelector.js";
 import { ONE_WEEK } from "./constants.js";
 const { prompt } = enquirer;
-const metsCalculation = new MetsCalculation();
 
 export default class ActivityPrompt {
   async gatherActivityInput() {
     const steps = await this.#inputDailyAverageSteps();
     const activeDay = await this.#inputActiveDays();
-    const weeklyMetsValue =
-      activeDay === "0" ? 0 : await this.#gatherActivityDetails(activeDay);
-    return { steps, activeDay, weeklyMetsValue };
+    const { activityIntensity, activityAmount } =
+      await this.#gatherActivityDetails();
+    return { steps, activeDay, activityIntensity, activityAmount };
   }
   async #inputDailyAverageSteps() {
     const response = await prompt([
@@ -49,17 +47,16 @@ export default class ActivityPrompt {
     return response.activityAmount;
   }
 
-  async #gatherActivityDetails(activeDay) {
+  async #gatherActivityDetails() {
     const intensitySelector = new IntensitySelector();
     const intensity = await intensitySelector.selectActivityIntensity();
     const activityIntensity =
       await intensitySelector.selectActivityLevels(intensity);
     const activityAmount = await this.#inputDailyActivityMinutes();
-    return metsCalculation.calcWeeklyActivityMets(
-      activeDay,
+    return {
       activityIntensity,
       activityAmount,
-    );
+    };
   }
 
   #validateProperNumber(input) {
