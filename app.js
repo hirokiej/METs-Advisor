@@ -12,7 +12,7 @@ async function app() {
     activity.getSteps(),
     activity.getActiveDay(),
     activity.getActivityIntensity(),
-    activity.getActivityAmount()
+    activity.getActivityAmount(),
   );
   const result = new Result(mets.getTotalMets());
   result.display();

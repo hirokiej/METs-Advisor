@@ -51,7 +51,7 @@ export default class Result {
   async #parseResultMessages() {
     const messageFile = await readFile(
       path.join(__dirname, "resultMessages.json"),
-      "utf-8"
+      "utf-8",
     );
     const message = messageFile
       .replaceAll("{totalMets}", this.totalMets)
@@ -76,10 +76,10 @@ export default class Result {
     const suggestRunningMinutes = this.#calcRunningMinutes();
 
     console.log(
-      `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`
+      `🚶ウォーキング(4メッツ): ${suggestWalkingMinutes}分以上(1日あたり${Math.trunc(suggestWalkingMinutes / ONE_WEEK)}分)`,
     );
     console.log(
-      `🏃軽いランニング(9メッツ): ${suggestRunningMinutes}分以上(1日あたり${Math.trunc(suggestRunningMinutes / ONE_WEEK)}分)`
+      `🏃軽いランニング(9メッツ): ${suggestRunningMinutes}分以上(1日あたり${Math.trunc(suggestRunningMinutes / ONE_WEEK)}分)`,
     );
   }
 }

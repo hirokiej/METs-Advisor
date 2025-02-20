@@ -11,7 +11,7 @@ export default class Mets {
     this.weeklyMets = this.#calcWeeklyActivityMets(
       activeDay,
       activityIntensity,
-      activityAmount
+      activityAmount,
     );
     this.totalMets = Math.trunc(this.stepMets + this.weeklyMets);
   }
