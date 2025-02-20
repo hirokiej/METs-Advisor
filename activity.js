@@ -54,6 +54,11 @@ export default class Activity {
   }
 
   async #gatherActivityDetails() {
+    if (this.activeDay === "0") {
+      this.activityIntensity = 0;
+      this.activityAmount = 0;
+      return;
+    }
     const intensitySelector = new IntensitySelector();
     const intensity = await intensitySelector.selectActivityIntensity();
     this.activityIntensity =
