@@ -3,14 +3,20 @@ import IntensitySelector from "./intensitySelector.js";
 import { ONE_WEEK } from "./constants.js";
 const { prompt } = enquirer;
 
-export default class ActivityPrompt {
-  async gatherActivityInput() {
-    const steps = await this.#inputDailyAverageSteps();
-    const activeDay = await this.#inputActiveDays();
-    const { activityIntensity, activityAmount } =
-      await this.#gatherActivityDetails();
-    return { steps, activeDay, activityIntensity, activityAmount };
+export default class Activity {
+  constructor() {
+    this.steps = 0;
+    this.activeDay = 0;
+    this.activityIntensity = 0;
+    this.activityAmount = 0;
   }
+
+  async prompt() {
+    this.steps = await this.#inputDailyAverageSteps();
+    this.activeDay = await this.#inputActiveDays();
+    await this.#gatherActivityDetails();
+  }
+
   async #inputDailyAverageSteps() {
     const response = await prompt([
       {
@@ -50,13 +56,9 @@ export default class ActivityPrompt {
   async #gatherActivityDetails() {
     const intensitySelector = new IntensitySelector();
     const intensity = await intensitySelector.selectActivityIntensity();
-    const activityIntensity =
+    this.activityIntensity =
       await intensitySelector.selectActivityLevels(intensity);
-    const activityAmount = await this.#inputDailyActivityMinutes();
-    return {
-      activityIntensity,
-      activityAmount,
-    };
+    this.activityAmount = await this.#inputDailyActivityMinutes();
   }
 
   #validateProperNumber(input) {
@@ -81,5 +83,21 @@ export default class ActivityPrompt {
     } else {
       return true;
     }
+  }
+
+  getSteps() {
+    return this.steps;
+  }
+
+  getActiveDay() {
+    return this.activeDay;
+  }
+
+  getActivityIntensity() {
+    return this.activityIntensity;
+  }
+
+  getActivityAmount() {
+    return this.activityAmount;
   }
 }

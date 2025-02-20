@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 
-import ActivityPrompt from "./activityPrompt.js";
+import Activity from "./activity.js";
 import Mets from "./mets.js";
 import Result from "./result.js";
 
 async function app() {
-  const activityPrompt = new ActivityPrompt();
+  const activity = new Activity();
+  await activity.prompt();
 
-  const { steps, activeDay, activityIntensity, activityAmount } =
-    await activityPrompt.gatherActivityInput();
-  const mets = new Mets(steps, activeDay, activityIntensity, activityAmount);
+  const mets = new Mets(
+    activity.getSteps(),
+    activity.getActiveDay(),
+    activity.getActivityIntensity(),
+    activity.getActivityAmount()
+  );
   const result = new Result(mets.getTotalMets());
   result.display();
 }
