@@ -1,0 +1,33 @@
+{
+  "name": "mets-advisor",
+  "version": "1.0.8",
+  "description": "A tool for calculating whether your physical activity is enough or not",
+  "main": "app.js",
+  "bin": {
+    "mets-advisor": "./app.js"
+  },
+  "scripts": {
+    "fix": "prettier --write . && eslint --fix",
+    "lint": "prettier --check . && eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hirokiej/METs-Advisor.git"
+  },
+  "author": "hirokiej",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hirokiej/METs-Advisor/issues"
+  },
+  "homepage": "https://github.com/hirokiej/METs-Advisor#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.19.0",
+    "eslint": "^9.19.0",
+    "globals": "^15.14.0",
+    "prettier": "^3.4.2"
+  },
+  "dependencies": {
+    "enquirer": "^2.4.1"
+  },
+  "type": "module"
+}
